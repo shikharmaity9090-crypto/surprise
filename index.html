@@ -6,23 +6,6 @@
 </head>
 <body style="margin:0;background:black;">
     <canvas id="canvas"></canvas>
-<body style="margin:0;background:black;overflow:hidden;">
-
-<h1 id="title" style="
-color:#ff4da6;
-text-align:center;
-margin-top:30px;
-font-family:Arial,sans-serif;">
-✨ A Special Surprise ✨
-</h1>
-
-<p id="subtitle" style="
-color:white;
-text-align:center;
-font-size:22px;
-font-family:Arial,sans-serif;">
-Made with love, especially for Shisu 💗
-</p>
 
 <canvas id="canvas"></canvas>
 
@@ -64,6 +47,12 @@ Made with love, especially for Shisu 💗
             ctx.stroke();
         }
     }
+// Draw "Shisu 💗" in the center
+ctx.font = "bold 40px Arial";
+ctx.fillStyle = "#ff4da6";
+ctx.textAlign = "center";
+ctx.textBaseline = "middle";
+ctx.fillText("Shisu 💗", 0, 0);
     </script>
 </body>
 </html>

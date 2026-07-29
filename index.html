@@ -47,12 +47,34 @@
             ctx.stroke();
         }
     }
-// Draw "Shisu 💗" in the center
-ctx.font = "bold 40px Arial";
-ctx.fillStyle = "#ff4da6";
+// Draw the heart
+for (let i = 0; i < 120; i++) {
+    let angle = i * Math.PI * 2 / 120;
+
+    let x = 16 * Math.pow(Math.sin(angle), 3) * 15;
+    let y = -(13 * Math.cos(angle)
+             - 5 * Math.cos(2 * angle)
+             - 2 * Math.cos(3 * angle)
+             - Math.cos(4 * angle)) * 15;
+
+    ctx.strokeStyle = colors[Math.floor(Math.random() * colors.length)];
+
+    for (let j = 0; j < 8; j++) {
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(
+            x + 6 * Math.cos(j * Math.PI / 4),
+            y + 6 * Math.sin(j * Math.PI / 4)
+        );
+        ctx.stroke();
+    }
+}
+
+// Draw the text after the heart
+ctx.font = "bold 28px Arial";
+ctx.fillStyle = "white";
 ctx.textAlign = "center";
 ctx.textBaseline = "middle";
-ctx.fillText("Shisu 💗", 0, 0);
-    </script>
+ctx.fillText("💗 Shisu 💗", 0, -5);
 </body>
 </html>

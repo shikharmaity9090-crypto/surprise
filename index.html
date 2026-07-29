@@ -3,10 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Heart Animation</title>
+    <title>Heart Animation - SHISU</title>
+
     <style>
-        body {
+        * {
             margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
             background: black;
             overflow: hidden;
         }
@@ -24,13 +30,6 @@
 const canvas = document.getElementById("canvas");
 const ctx = canvas.getContext("2d");
 
-// Resize canvas
-canvas.width = window.innerWidth;
-canvas.height = window.innerHeight;
-
-// Move origin to center
-ctx.translate(canvas.width / 2, canvas.height / 2);
-
 const colors = [
     "red",
     "blue",
@@ -42,55 +41,99 @@ const colors = [
     "pink"
 ];
 
-// Draw Heart
-for (let i = 0; i < 120; i++) {
+function resizeCanvas() {
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
 
-    let angle = i * Math.PI * 2 / 120;
+    // Reset transform
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
 
-    let x = 16 * Math.pow(Math.sin(angle), 3) * 15;
+    // Move origin to center
+    ctx.translate(canvas.width / 2, canvas.height / 2);
 
-    let y = -(13 * Math.cos(angle)
-            - 5 * Math.cos(2 * angle)
-            - 2 * Math.cos(3 * angle)
-            - Math.cos(4 * angle)) * 15;
+    drawHeart();
+}
 
-    ctx.strokeStyle = colors[Math.floor(Math.random() * colors.length)];
+function drawHeart() {
 
-    for (let j = 0; j < 8; j++) {
+    ctx.clearRect(
+        -canvas.width / 2,
+        -canvas.height / 2,
+        canvas.width,
+        canvas.height
+    );
 
-        ctx.beginPath();
-        ctx.moveTo(x, y);
+    // Draw colorful sparkles
+    for (let i = 0; i < 120; i++) {
 
-        ctx.lineTo(
-            x + 6 * Math.cos(j * Math.PI / 4),
-            y + 6 * Math.sin(j * Math.PI / 4)
-        );
+        let angle = i * Math.PI * 2 / 120;
 
-        ctx.stroke();
+        let x = 16 * Math.pow(Math.sin(angle), 3) * 15;
+
+        let y = -(13 * Math.cos(angle)
+                - 5 * Math.cos(2 * angle)
+                - 2 * Math.cos(3 * angle)
+                - Math.cos(4 * angle)) * 15;
+
+        ctx.strokeStyle = colors[Math.floor(Math.random() * colors.length)];
+
+        for (let j = 0; j < 8; j++) {
+
+            ctx.beginPath();
+            ctx.moveTo(x, y);
+
+            ctx.lineTo(
+                x + 6 * Math.cos(j * Math.PI / 4),
+                y + 6 * Math.sin(j * Math.PI / 4)
+            );
+
+            ctx.stroke();
+        }
     }
+
+    // Draw heart outline
+    ctx.beginPath();
+
+    for (let i = 0; i <= 360; i++) {
+
+        let t = i * Math.PI / 180;
+
+        let x = 16 * Math.pow(Math.sin(t), 3) * 15;
+
+        let y = -(13 * Math.cos(t)
+                - 5 * Math.cos(2 * t)
+                - 2 * Math.cos(3 * t)
+                - Math.cos(4 * t)) * 15;
+
+        if (i === 0) {
+            ctx.moveTo(x, y);
+        } else {
+            ctx.lineTo(x, y);
+        }
+    }
+
+    ctx.strokeStyle = "red";
+    ctx.lineWidth = 4;
+    ctx.shadowColor = "red";
+    ctx.shadowBlur = 15;
+    ctx.stroke();
+
+    // SHISU text in center
+    ctx.font = "bold 60px Arial";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillStyle = "white";
+    ctx.shadowColor = "red";
+    ctx.shadowBlur = 25;
+    ctx.fillText("SHISU", 0, 0);
+
+    // Reset shadow
+    ctx.shadowBlur = 0;
 }
 
-// Draw Text
-ctx.beginPath();
+resizeCanvas();
 
-for (let i = 0; i <= 360; i++) {
-    let t = i * Math.PI / 180;
-
-    let x = 16 * Math.pow(Math.sin(t), 3) * 15;
-    let y = -(13 * Math.cos(t)
-            - 5 * Math.cos(2 * t)
-            - 2 * Math.cos(3 * t)
-            - Math.cos(4 * t)) * 15;
-
-    if (i === 0)
-        ctx.moveTo(x, y);
-    else
-        ctx.lineTo(x, y);
-}
-
-ctx.strokeStyle = "red";
-ctx.lineWidth = 4;
-ctx.stroke();
+window.addEventListener("resize", resizeCanvas);
 </script>
 
 </body>
